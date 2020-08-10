@@ -1,0 +1,3 @@
+{
+    "mongoURI": "mongodb+srv://user:projectSoftUni@project-softuni-gn0nx.mongodb.net/doctalk?retryWrites=true&w=majority"
+}
