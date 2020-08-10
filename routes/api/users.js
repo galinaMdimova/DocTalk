@@ -1,5 +1,5 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 const { check, validationResult } = require('express-validator')
 const gravatar = require('gravatar')
 const bcrypt = require('bcryptjs')
@@ -67,10 +67,9 @@ router.post('/', [
         } catch (err) {
             console.log(err.message)
             res.status(500).send('Server error')
-
         }
 
     }
-);
+)
 
 module.exports = router;

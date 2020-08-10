@@ -26,7 +26,7 @@ const ProfileSchema = new Schema({
     bio: {
         type: String
     },
-    experiance: [
+    experience: [
         {
             title: {
                 type: String,
@@ -84,7 +84,6 @@ const ProfileSchema = new Schema({
             description: {
                 type: String,
             }
-
         }
     ],
     social:{
