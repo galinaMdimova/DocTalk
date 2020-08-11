@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Landing = () =>{
     return(
@@ -10,9 +11,9 @@ const Landing = () =>{
               Направете ваш профил и споделяйте професионален опит с вашите колеги
             </p>
             <div className="buttons">
-              <a href="register.html" className="btn btn-primary">Регистрация</a>
-              <a href="login.html" className="btn btn-light">Вход</a>
-            </div>
+              <Link to="/register" className="btn btn-primary">Регистрация</Link>
+              <Link to="/login" className="btn btn-light">Вход</Link>
+            </div> 
           </div>
         </div>
       </section>
