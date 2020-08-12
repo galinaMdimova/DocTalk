@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken')
 const config = require('config')
 const bcrypt = require('bcryptjs')
 
-// @route   POST api/auth/test
+// @route   GET api/auth
 // @desc    Authenticate users & get login
 // @access  Public
 router.get('/', auth, async (req, res) => {
@@ -19,6 +19,10 @@ router.get('/', auth, async (req, res) => {
         res.status(500).send('Server error')
     }
 });
+
+// @route   POST api/auth
+// @desc    Authenticate users & get login
+// @access  Public
 
 router.post(
     '/',
@@ -41,6 +45,8 @@ router.post(
                 return res.status(400)
                     .json({ errors: [{ msg: 'Данните не са коректни' }] })
             }
+
+            console.log(user)
 
             //check if password matchs
             const isMatch = await bcrypt.compare(password, user.password)

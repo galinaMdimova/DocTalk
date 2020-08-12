@@ -1,5 +1,4 @@
 import  { SET_ALERT, REMOVE_ALERT} from '../actions/types'
-import { STATES } from 'mongoose'
 const initialState = []
 
 export default function (state = initialState, action){
