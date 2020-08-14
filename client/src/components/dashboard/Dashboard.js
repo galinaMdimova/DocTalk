@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { getCurrentProfile } from '../../actions/profile'
 import PropTypes from 'prop-types'
 import Spinner from '../layout/Spinner'
+import DashboardActions from './DashboardActions'
 
 const Dashboard = ({
     getCurrentProfile,
@@ -21,7 +22,10 @@ const Dashboard = ({
         <p className="lead">
             <i className="fas fa-user"> Здравейте, {user && user.name}</i>
         </p>
-        {profile !== null ? <Fragment> имате </Fragment> : 
+        {profile !== null ? 
+        <Fragment> 
+            <DashboardActions/>  
+        </Fragment> : 
         <Fragment> 
             <p>Все още нямате свой профил. </p>
             <Link to='/create-profile' className="btn btn-primary my-1">Създай профил</Link>
