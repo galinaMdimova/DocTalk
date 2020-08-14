@@ -21,51 +21,51 @@ const AddEducation = ({addEducation, history}) => {
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value })
    
     return <Fragment>
-        <h1 class="large text-primary">
+        <h1 className="large text-primary">
             Добави квалификации
       </h1>
-        <p class="lead">
-            <i class="fas fa-code-branch"></i> Образование
+        <p className="lead">
+            <i className="fas fa-code-branch"></i> Образование
       </p>
         <small>* задължителни полета </small>
-        <form class="form" onSubmit={e => {
+        <form className="form" onSubmit={e => {
             e.preventDefault()
             addEducation(formData, history)}}>
-            <div class="form-group">
+            <div className="form-group">
                 <input type="text" placeholder="* Име на учебно заведение" 
                 name="school" value={school} 
                 onChange={e => onChange(e)} required />
             </div>
-            <div class="form-group">
+            <div className="form-group">
                 <input type="text" placeholder="* Придобити степен/ниво/сертификат" 
                 name="degree" value={degree}  
                 onChange={e => onChange(e)} required />
             </div>
-            <div class="form-group">
+            <div className="form-group">
                 <input type="text" placeholder="* Дисциплина" name="fieldofstudy" 
                 value={fieldofstudy}  
                 onChange={e => onChange(e)}
                 required/>
             </div>
-            <div class="form-group">
+            <div className="form-group">
                 <h4>* От</h4>
                 <input type="date" name="from"  value={from}  
                 onChange={e => onChange(e)} required/>
             </div>
-            <div class="form-group">
+            <div className="form-group">
                 <p><input type="checkbox" name="current" checked={current} value={current} 
                 onChange={e => {setFormData({...formData, current: !current})
                 toggleDisabled(!toDateDisabled)
             }} 
-                /> {' '} Настояща </p>
+                /> {' '} В момента </p>
             </div>
-            <div class="form-group">
+            <div className="form-group">
                 <h4>До</h4>
                 <input type="date" name="to" name="from" value={to}  
                 onChange={e => onChange(e)}
                 disabled={toDateDisabled ? 'disabled' : ''}/>
             </div>
-            <div class="form-group">
+            <div className="form-group">
                 <textarea
                     name="description"
                     value={description}
@@ -75,8 +75,8 @@ const AddEducation = ({addEducation, history}) => {
                     placeholder="Описание"
                 ></textarea>
             </div>
-            <input type="submit" class="btn btn-primary my-1" />
-            <Link class="btn btn-light my-1" to="/dashboard">Назад</Link>
+            <input type="submit" className="btn btn-primary my-1" />
+            <Link className="btn btn-light my-1" to="/dashboard">Назад</Link>
         </form>
     </Fragment>
 }
