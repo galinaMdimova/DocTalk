@@ -14,7 +14,6 @@ import {
 export const getCurrentProfile = () => async dispatch => {
     try {
         const res = await axios.get('api/profile/me')
-        console.log("Res", res)
         dispatch({
             type: GET_PROFILE,
             payload: res.data
@@ -32,7 +31,6 @@ export const getProfiles = () => async dispatch => {
     dispatch({type: CLEAR_PROFILE})
     try {
         const res = await axios.get('api/profile')
-        console.log("Res", res)
         dispatch({
             type: GET_PROFILES,
             payload: res.data
@@ -49,7 +47,7 @@ export const getProfiles = () => async dispatch => {
 export const getProfileById = userId => async dispatch => {
     try {
         const res = await axios.get(`api/profile/user/${userId}`)
-        console.log("Res", res)
+    
         dispatch({
             type: GET_PROFILE,
             payload: res.data
@@ -191,11 +189,11 @@ export const deleteEducation = id => async dispatch => {
     }
 }
 
-//delete account adn profile
+//delete account and profile
 export const deleteAccount = () => async dispatch => {
     if(window.confirm('Сигурни ли сте, че искатe да изтриете профила си?')){
         try {
-            const res = await axios.delete('/api/profile')
+            await axios.delete('/api/profile')
 
             dispatch({type: CLEAR_PROFILE})
             dispatch({type: ACCOUNT_DELETED})

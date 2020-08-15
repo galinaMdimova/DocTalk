@@ -61,7 +61,7 @@ const AddEducation = ({addEducation, history}) => {
             </div>
             <div className="form-group">
                 <h4>До</h4>
-                <input type="date" name="to" name="from" value={to}  
+                <input type="date" name="to" value={to}  
                 onChange={e => onChange(e)}
                 disabled={toDateDisabled ? 'disabled' : ''}/>
             </div>
@@ -85,4 +85,6 @@ AddEducation.propTypes = {
     addEducation: PropTypes.func.isRequired
 }
 
-export default connect(null, { addEducation })(AddEducation)
+export default connect(null,  
+    { addEducation })
+    (withRouter(AddEducation))

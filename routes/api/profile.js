@@ -25,9 +25,7 @@ router.get('/me', auth, async (req, res) => {
     } catch (err) {
         console.error(err.message)
         res.status(500).send('Server error')
-
     }
-
 })
 
 // @route   POST api/profile
@@ -81,7 +79,7 @@ router.post('/',
             let profile = await Profile.findOne({ user: req.user.id })
 
             if (profile) {
-                console.log(profile)
+               
                 //Update profile 
                 profile = await Profile.findOneAndUpdate( 
                     { user: req.user.id },
@@ -125,9 +123,10 @@ router.get('/user/:user_id', async (req, res)=> {
     try {
         const profile = await Profile.findOne({ user: req.params.user_id})
         .populate('user', ['name', 'avatar'])
-        if(!profile) 
+        console.log(profile) 
+        if(!profile)  
         return res.status(400).json({msg: 'Не е открит профил'})
-        res.json(profile) 
+        res.json(profile)   
 
     } catch(err) {
         console.error(err.message)

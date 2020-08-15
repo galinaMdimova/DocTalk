@@ -25,11 +25,9 @@ const CreateProfile = ({createProfile, history}) => {
   const onSubmit = e =>{
     e.preventDefault()
     createProfile(formData, history)
-
   }
 
-  return (
-    <Fragment>
+  return <Fragment>
       <h1 className="large text-primary">
         Създайте вашия профил
       </h1>
@@ -52,38 +50,30 @@ const CreateProfile = ({createProfile, history}) => {
             <option value="Акушер-гинеколог">Акушер-гинеколог</option>
             <option value="Друго">Друго</option>
           </select>
-          <small className="form-text"
-          >Посочете област на вашата професионална специализация</small
-          >
+          <small className="form-text">Посочете област на вашата професионална специализация
+          </small>
         </div>
         <div className="form-group">
           <input type="text" placeholder="Лечебно или учебно заведение" 
           name="company" value={company}
           onChange={e => onChange(e)}/>
-          <small className="form-text"
-          >* Посочете здравното/учебното заведение, в което практикувате или се обучавате</small
-          >
+          <small className="form-text">* Посочете здравното/учебното заведение, в което практикувате или се обучавате
+          </small>
         </div>
         <div className="form-group">
           <input type="text" placeholder="Уебсайт" name="website" value={website}
           onChange={e => onChange(e)}/>
-          <small className="form-text"
-          >Имате ваш уебсайт?</small
-          >
+          <small className="form-text">Имате ваш уебсайт?</small>
         </div>
         <div className="form-group">
           <input type="text" placeholder="Населено място" name="location" value={location}
           onChange={e => onChange(e)} />
-          <small className="form-text"
-          >Населено място</small
-          >
+          <small className="form-text">Населено място</small>
         </div>
         <div className="form-group">
           <input type="text" placeholder="Квалификации" name="skills" value={skills}
           onChange={e => onChange(e)}/>
-          <small className="form-text"
-          >Посочете какви квалификации имате</small
-          >
+          <small className="form-text">Посочете какви квалификации имате</small>
         </div>
 
         <div className="form-group">
@@ -115,13 +105,11 @@ const CreateProfile = ({createProfile, history}) => {
         <input type="submit" className="btn btn-primary my-1" />
         <Link className="btn btn-light my-1" to="/dashboard">Назад</Link>
       </form>
-    </Fragment>
-  )
+    </Fragment>  
 }
 
-CreateProfile.propTypesc = {
- createProfile: PropTypes.func.isRequired,
-} 
+CreateProfile.propTypes = {
+ createProfile: PropTypes.func.isRequired
+}
 
-
-export default connect(null, { createProfile })(withRouter(CreateProfile))
+export default connect(null, {createProfile})(withRouter(CreateProfile))

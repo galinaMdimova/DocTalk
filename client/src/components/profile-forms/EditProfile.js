@@ -18,7 +18,7 @@ const EditProfile = ({ profile: { profile, loading }, createProfile, getCurrentP
 
   const [displaySocialInputs, toggleSocialinputs] = useState(false)
 
-  useEffect(()=>{
+  useEffect(()=> {
       getCurrentProfile()
 
       setFormData({
@@ -31,16 +31,15 @@ const EditProfile = ({ profile: { profile, loading }, createProfile, getCurrentP
         youtube: loading || !profile.youtube ? '' : profile.youtube,
         facebook: loading || !profile.facebook ? '' : profile.facebook
       })
-  },[loading])
+  },[loading, getCurrentProfile])
 
   const { company, website, location, skills, status, bio, youtube, facebook } = formData
 
   const onChange = e => setFormData({...formData, [e.target.name]: e.target.value})
 
-  const onSubmit = e =>{
+  const onSubmit = e => {
     e.preventDefault()
     createProfile(formData, history, true)
-
   }
 
   return (
@@ -67,40 +66,33 @@ const EditProfile = ({ profile: { profile, loading }, createProfile, getCurrentP
             <option value="Акушер-гинеколог">Акушер-гинеколог</option>
             <option value="Друго">Друго</option>
           </select>
-          <small className="form-text"
-          >Посочете област на вашата професионална специализация</small
-          >
+          <small className="form-text">
+          Посочете област на вашата професионална специализация</small>
+          
         </div>
         <div className="form-group">
           <input type="text" placeholder="Лечебно или учебно заведение" 
           name="company" value={company}
           onChange={e => onChange(e)}/>
-          <small className="form-text"
-          >* Посочете здравното/учебното заведение, в което практикувате или се обучавате</small
-          >
+          <small className="form-text">
+          * Посочете здравното/учебното заведение, в което практикувате или се обучавате</small>
+          
         </div>
         <div className="form-group">
           <input type="text" placeholder="Уебсайт" name="website" value={website}
           onChange={e => onChange(e)}/>
-          <small className="form-text"
-          >Имате ваш уебсайт?</small
-          >
+          <small className="form-text">Имате ваш уебсайт?</small>
         </div>
         <div className="form-group">
           <input type="text" placeholder="Населено място" name="location" value={location}
           onChange={e => onChange(e)} />
-          <small className="form-text"
-          >Населено място</small
-          >
+          <small className="form-text">Населено място</small>  
         </div>
         <div className="form-group">
           <input type="text" placeholder="Квалификации" name="skills" value={skills}
           onChange={e => onChange(e)}/>
-          <small className="form-text"
-          >Посочете какви квалификации имате</small
-          >
+          <small className="form-text">Посочете какви квалификации имате</small>
         </div>
-
         <div className="form-group">
           <textarea placeholder="Представете се с няколко изречения" name="bio" 
           value={bio}  onChange={e => onChange(e)}></textarea>
@@ -134,14 +126,14 @@ const EditProfile = ({ profile: { profile, loading }, createProfile, getCurrentP
   )
 }
 
-EditProfile.propTypesc = {
+EditProfile.propTypes = {
  createProfile: PropTypes.func.isRequired,
  getCurrentProfile: PropTypes.func.isRequired,
  profile: PropTypes.object.isRequired
 } 
 
 const mapStateToProps = state => ({
-    profile: state.profile
+    profile: state.profile 
 })
 
 export default connect(mapStateToProps, { createProfile, getCurrentProfile })(withRouter(EditProfile))

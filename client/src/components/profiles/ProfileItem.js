@@ -2,9 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-const ProfileItem = ({ profile: {
-    user: { _id, name, avatar }
-    , status,
+const ProfileItem = ({ 
+    profile: {
+    user: { _id, name, avatar }, 
+    status,
     company,
     location,
     skills }
@@ -25,10 +26,8 @@ const ProfileItem = ({ profile: {
                     <i className="fas fa-check"></i>{skill}
                 </li>
             ))}
-
         </ul>
     </div>
-
 }
 
 ProfileItem.propTypes = {
