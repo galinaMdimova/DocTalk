@@ -4,33 +4,58 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Spinner from '../layout/Spinner'
 import { getProfileById } from '../../actions/profile'
+import ProfileTop from './ProfileTop'
+import ProfileAbout from './ProfileAbout'
+import ProfileExperience from './ProfileExperience'
+import ProfileEducation from './ProfileEducation'
 
 const Profile = ({
-    getProfileById, 
-    profile: { profile, loading }, 
+    getProfileById,
+    profile: { profile },
     auth,
     match
-    
+
 }) => {
     useEffect(() => {
-        getProfileById(match.params.id) 
+        getProfileById(match.params.id)
     }, [getProfileById, match.params.id])
 
-    return <Fragment>
-        { profile === null || loading ? <Spinner /> : 
+    return (
         <Fragment>
-            <Link to='/profiles' className="btn btn-light">
-                Назад към профилите
+            {profile === null ? (<Spinner />) :
+                <Fragment>
+                    <Link to='/profiles' className="btn btn-light">
+                        Назад към профилите
             </Link>
-            {auth.isAuthenticated && 
-            auth.loading === false && 
-            auth.user.id === profile.user._id &&
-        (<Link to="/edit-profile" className="btn btn-dark">
-            Редактирай профил</Link>)}
-            <div class="profile-grid my-1">
-            </div>
-        </Fragment>} 
-    </Fragment>    
+                    {auth.isAuthenticated &&
+                        auth.loading === false &&
+                        auth.user._id === profile.user._id &&
+                        (<Link to="/edit-profile" className="btn btn-dark">
+                            Редактирай профил</Link>)}
+
+                    <div className="profile-grid my-1">
+                        <ProfileTop profile={profile} />
+                        <ProfileAbout profile={profile} />
+                        <div className="profile-exp bg-white p-2">
+                            <h2 className="text-primary">Квалификации</h2>
+                            {profile.experience.length > 0 ? (<Fragment>
+                                {profile.experience.map(experience => (
+                                    <ProfileExperience key={experience._id} experience={experience} />
+                                ))}
+                            </Fragment>) : (<h4>Нямам квалификации</h4>)}
+                        </div>
+
+                        <div className="profile-edu bg-white p-2">
+                            <h2 className="text-primary">Образование</h2>
+                            {profile.education.length > 0 ? (<Fragment>
+                                {profile.education.map(education => (
+                                    <ProfileEducation key={education._id} education={education} />
+                                ))}
+                            </Fragment>) : (<h4>В процес на обучение съм</h4>)}
+                        </div>
+                    </div>
+                </Fragment>}
+        </Fragment>)
 }
 
 
@@ -42,7 +67,7 @@ Profile.propTypes = {
 
 const mapStateToProps = state => ({
     profile: state.profile,
-    auth: state.auth 
+    auth: state.auth
 })
 
 export default connect(mapStateToProps, { getProfileById })(Profile)

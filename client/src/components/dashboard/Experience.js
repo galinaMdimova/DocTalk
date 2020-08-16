@@ -24,7 +24,7 @@ const Experience = ({ experience, deleteExperience }) => {
 
     return (
         <Fragment>
-            <h2 className="my-2">Придобит опит</h2>
+            <h2 className="my-2">Професионален опит</h2>
             <table className="table">
                 <thead>
                     <tr>

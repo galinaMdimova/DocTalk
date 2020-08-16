@@ -5,6 +5,7 @@ const Profile = require('../../models/Profile')
 const User = require('../../models/User')
 const Post = require('../../models/Post')
 const { check, validationResult } = require('express-validator')
+const checkObjectId = require('../../middleware/checkObjectId');
 
 // @route   GET api/profile/me
 // @desc    Get current users profile 
@@ -14,7 +15,7 @@ router.get('/me', auth, async (req, res) => {
 
     try {
         const profile = await Profile.findOne({ user: req.user.id })
-            .populate('User', ['name', 'avatar'])
+            .populate('user', ['name', 'avatar'])
 
         if (!profile) {
             return res.status(400).json({ msg: 'Този потребител няма профил' })
@@ -119,23 +120,24 @@ router.get('/', async (req, res)=> {
 // @desc    Get profile by user_id
 // @access  Public
 
-router.get('/user/:user_id', async (req, res)=> {
-    try {
-        const profile = await Profile.findOne({ user: req.params.user_id})
-        .populate('user', ['name', 'avatar'])
-        console.log(profile) 
-        if(!profile)  
-        return res.status(400).json({msg: 'Не е открит профил'})
-        res.json(profile)   
-
-    } catch(err) {
+router.get(
+    '/user/:user_id',
+    checkObjectId('user_id'),
+    async ({ params: { user_id } }, res) => {
+      try {
+        const profile = await Profile.findOne({
+          user: user_id
+        }).populate('user', ['name', 'avatar'])
+  
+        if (!profile) return res.status(400).json({ msg: 'Профилът не е намерен' })
+  
+        return res.json(profile)
+      } catch (err) {
         console.error(err.message)
-        if(err.kind ==='ObjectId'){
-            return res.status(400).json({msg: 'Не е открит профил'})
-        }
-        res.status(500).send('Server error')   
-    }  
-})  
+        return res.status(500).json({ msg: 'Server error' })
+      }
+    }
+  )
 
 // @route   DELETE api/profile
 // @desc    delete profile, user and posts
@@ -144,7 +146,7 @@ router.get('/user/:user_id', async (req, res)=> {
 router.delete('/', auth, async (req, res)=> {
     try {
         //Remove users posts
-        await Post.deleteMany({ user: req.user.id})
+        await Post.deleteMany({ user: req.user.id}) 
 
         //Remove profile
        await Profile.findOneAndRemove({user: req.user.id})
