@@ -20,7 +20,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   const onSubmit = async e => {
     e.preventDefault()
     if (password !== password2) {
-      setAlert('Password do not match', 'danger')
+      setAlert('Паролата и в двете полета трябва да бъде еднаква', 'danger')
     } else {
       register({ name, email, password })
     } 
