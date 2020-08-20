@@ -10,8 +10,9 @@ const PostItem = ({
     removeLike, 
     deletePost,
     auth, post: {
-    _id, text, name, avatar, user, likes, comments, date
-}}) => (
+    _id, text, name, avatar, user, likes, comments, date}, 
+    showActions
+}) => (
     <div className='post bg-white p-1 my-1'>
     <div>
       <Link to={`/profile/${user}`}>
@@ -25,12 +26,13 @@ const PostItem = ({
         Публикация от <Moment format='YYYY/MM/DD'>{date}</Moment>
       </p>
 
-        <button onClick={() => addLike(_id)} type='button' className='btn btn-light'>
+      {showActions && (<Fragment>
+        <button onClick={e => addLike(_id)} type='button' className='btn btn-light'>
             <i className='fas fa-thumbs-up'/> {' '}
             <span>{likes.length > 0 && <span>{likes.length}</span>}</span>
         </button>
 
-        <button onClick={() => removeLike(_id)} type='button' className='btn btn-light'>
+        <button onClick={e => removeLike(_id)} type='button' className='btn btn-light'>
             <i className='fas fa-thumbs-down'/>
         </button>
 
@@ -42,15 +44,20 @@ const PostItem = ({
           </Link>
           {!auth.loading && user === auth.user._id && (
             <button
-            onClick={() => deletePost(_id)}
+            onClick={e => deletePost(_id)}
               type='button'
               className='btn btn-danger'>
-              <i className='fas fa-times' />
+              <i className='fas fa-times'/>
             </button>
-          )} 
+          )}
+      </Fragment> )}
     </div>
   </div>
 )
+
+PostItem.defaultProps = {
+  showActions: true
+}
 
 PostItem.propTypes = {
     post: PropTypes.object.isRequired,
@@ -58,7 +65,7 @@ PostItem.propTypes = {
     addLike: PropTypes.func.isRequired,
     removeLike: PropTypes.func.isRequired,
     deletePost: PropTypes.func.isRequired,
-  };
+  }
 
 const mapStateToProps = state => ({
     auth: state.auth
