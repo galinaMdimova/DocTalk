@@ -2,9 +2,9 @@ const express = require('express')
 const router = express.Router()
 const { check, validationResult } = require('express-validator')
 const auth = require('../../middleware/auth')
-const Profile = require('../../models/Profile')
 const User = require('../../models/User')
 const Post = require('../../models/Post')
+const checkObjectId = require('../../middleware/checkObjectId');
 
 // @route   POST api/posts
 // @desc    Create a post
@@ -52,7 +52,7 @@ router.get('/', auth, async (req, res) => {
 // @route   GET api/posts/:id
 // @desc    Get post by id
 // @access  Private
-router.get('/:id', auth, async (req, res) => {
+router.get('/:id', [auth, checkObjectId('id')], async (req, res) => {
     try {
         const post = await Post.findById(req.params.id) 
         if(!post){
@@ -72,7 +72,7 @@ router.get('/:id', auth, async (req, res) => {
 // @route   DELETE api/posts/:id
 // @desc    delete a post 
 // @access  Private
-router.delete('/:id', auth, async (req, res) => {
+router.delete('/:id', [auth, checkObjectId('id')], async (req, res) => {
     try {
         const post = await Post.findById(req.params.id) 
         //Check user
@@ -93,15 +93,15 @@ router.delete('/:id', auth, async (req, res) => {
 // @route   PUT api/posts/like/:id 
 // @desc    Like a post 
 // @access  Private
-router.put('/like/:id', auth, async(req, res)=>{
+router.put('/like/:id', [auth, checkObjectId('id')], async(req, res)=>{
     try {
         const post = await Post.findById(req.params.id)
+
         //Check if the post has already been liked
-        if(post.likes
-            .filter(like=> like.user.toString() === req.user.id).length > 0){
-                return res.status(400).json({msg: 'Публикацията вече е харесана'})
-        }
-        post.likes.unshift({user:req.user.id}) 
+    if (post.likes.some(like => like.user.toString() === req.user.id)) {
+      return res.status(400).json({ msg: 'Публикацията вече е харесана' })
+    }
+        post.likes.unshift({ user:req.user.id }) 
         await post.save()
         res.json(post.likes) 
         
@@ -114,20 +114,18 @@ router.put('/like/:id', auth, async(req, res)=>{
 // @route   PUT api/posts/unlike/:id 
 // @desc    Unlike a post 
 // @access  Private
-router.put('/unlike/:id', auth, async(req, res)=>{
+router.put('/unlike/:id', [auth, checkObjectId('id')], async(req, res)=>{
     try {
         const post = await Post.findById(req.params.id)
         //Check if the post has already been liked
-        if(post.likes
-            .filter(like=> like.user.toString() === req.user.id).length === 0){
-                return res.status(400).json({msg: 'Публикацията все още не е харесана'})
-        }
+        if (!post.likes.some(like => like.user.toString() === req.user.id)) {
+            return res.status(400).json({ msg: 'Публикацията все още не е харесана' })
+          }
 
         //Get remove index
-        const removeIndex = post.likes
-        .map(like=>like.user.toString())
-        .indexOf(req.user.id)
-        post.likes.splice(removeIndex, 1)
+        post.likes = post.likes.filter(
+            ({ user }) => user.toString() !== req.user.id
+          )
 
         await post.save()
         res.json(post.likes) 

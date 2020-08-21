@@ -32,7 +32,7 @@ export const getPosts = () => async dispatch => {
 // Add like
 export const addLike = id => async dispatch => {
     try {
-      const res = await axios.put(`/api/posts/like/${id}`)
+      const res = await axios.put(`/api/posts/like/${id}`) 
   
       dispatch({
         type: UPDATE_LIKES,
@@ -82,7 +82,7 @@ export const removeLike = id => async dispatch => {
     }
   }
 
-// Add posts
+// Add post
 export const addPost = formData => async dispatch => {
   const config = {
     headers: {

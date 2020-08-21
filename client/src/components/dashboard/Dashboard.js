@@ -34,9 +34,10 @@ const Dashboard = ({
                     <i className="fas fa-user-minus"></i> Изтрий регистрация и профил
                 </button>
             </div>
+
         </Fragment> : 
         <Fragment> 
-            <p>Все още нямате свой профил. </p>
+            <p>Все още нямате свой профил </p>
             <Link to='/create-profile' className="btn btn-primary my-1">Създай профил</Link>
             </Fragment>}
     </Fragment> 

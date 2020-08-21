@@ -10,7 +10,8 @@ const ProfileItem = ({
     location,
     skills }
 }) => {
-    return <div className="profile bg-ligth">
+    return (
+    <div className="profile bg-ligth">
         <img src={avatar} alt="" className="round-img" />
         <div>
             <h2>{name}</h2>
@@ -28,7 +29,7 @@ const ProfileItem = ({
             ))}
         </ul>
     </div>
-}
+    )}
 
 ProfileItem.propTypes = {
     profile: PropTypes.object.isRequired

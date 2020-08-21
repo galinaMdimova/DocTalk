@@ -10,11 +10,13 @@ const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
         getProfiles()
     }, [getProfiles])
 
-    return <Fragment>
-        {loading ? <Spinner /> : <Fragment>
+    return (
+    <Fragment>
+        {loading ? <Spinner /> : (
+        <Fragment>
             <h1 className="large text-primary">Лекари и медицински лица</h1>
             <p className="lead">
-                <i className="fab fa-connectdevelop">Общувай с твоите колеги</i>
+                <i className="fab fa-connectdevelop"/> Общувай с твоите колеги
             </p>
             <div className="profiles">
                 {profiles.length > 0 ? (
@@ -22,12 +24,12 @@ const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
                         <ProfileItem key={profile._id} profile={profile} />
                     ))
 
-                ) : <h4>Не са отрити други профили</h4>}
+                ) : (<h4>Не са отрити други профили</h4>)}
 
             </div>
-        </Fragment>}
+        </Fragment>)}
     </Fragment>
-}
+    )}
 
 Profiles.propTypes = {
     getProfiles: PropTypes.func.isRequired,
